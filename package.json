@@ -1,0 +1,13 @@
+{
+  "name": "eon.extension.browser.base.webextensions",
+  "version": "0.1.0",
+  "devDependencies": {
+    "babel-core": "^6.11.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "eslint": "^3.7.0",
+    "eslint-plugin-react": "^6.3.0"
+  }
+}

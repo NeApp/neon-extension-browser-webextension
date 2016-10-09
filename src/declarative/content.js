@@ -91,11 +91,19 @@ export default class WebExtensionsDeclarativeContent extends DeclarativeContent 
         }
 
         if(action instanceof RequestContentScript) {
-            return new chrome.declarativeContent.RequestContentScript(action.options);
+            return new chrome.declarativeContent.RequestContentScript({
+                css: action.css,
+                js: action.js,
+
+                allFrames: action.allFrames,
+                matchAboutBlank: action.matchAboutBlank
+            });
         }
 
         if(action instanceof SetIcon) {
-            return new chrome.declarativeContent.SetIcon(action.options);
+            return new chrome.declarativeContent.SetIcon({
+                imageData: action.imageData
+            });
         }
 
         if(action instanceof ShowPageAction) {
@@ -111,7 +119,19 @@ export default class WebExtensionsDeclarativeContent extends DeclarativeContent 
         }
 
         if(condition instanceof PageStateMatcher) {
-            return new chrome.declarativeContent.PageStateMatcher(condition.options);
+            let options = {
+                pageUrl: condition.pageUrl
+            };
+
+            if(isDefined(condition.css) && condition.css.length > 0) {
+                options.css = condition.css;
+            }
+
+            if(condition.isBookmarked) {
+                options.isBookmarked = condition.isBookmarked;
+            }
+
+            return new chrome.declarativeContent.PageStateMatcher(options);
         }
 
         throw new NotImplementedError('Unsupported condition: ' + condition);

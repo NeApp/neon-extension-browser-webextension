@@ -14,25 +14,51 @@ export default class WebExtensionsMessaging extends Messaging {
 
         this._chromeListeners = [];
 
-        // Bind to port events
+        // Bind to messaging events
+        this.bind();
+    }
+
+    static get supported() {
+        return true;
+    }
+
+    static get supportsExternalMessaging() {
+        return true;
+    }
+
+    get supportsExternalMessaging() {
+        return true;
+    }
+
+    bind() {
+        if(!this.constructor.supported) {
+            console.warn('Messaging is not supported, not binding to any events');
+            return false;
+        }
+
+        // Bind to extension messaging events
         this._bind(chrome.runtime.onConnect, (port) =>
             this.emit('connect', this.createPortWrapper(port))
-        );
-
-        this._bind(chrome.runtime.onConnectExternal, (port) =>
-            this.emit('connectExternal', this.createPortWrapper(port))
         );
 
         this._bind(chrome.runtime.onMessage, (data, sender, sendResponse) =>
             this.emit('message', data, null, sendResponse)
         );
 
-        this._bind(chrome.runtime.onMessageExternal, (data, sender, sendResponse) =>
-            this.emit('messageExternal', data, null, sendResponse)
-        );
-    }
+        // Bind to external messaging events (if enabled)
+        if(this.constructor.supportsExternalMessaging) {
+            this._bind(chrome.runtime.onConnectExternal, (port) =>
+                this.emit('connectExternal', this.createPortWrapper(port))
+            );
 
-    static get supported() {
+            this._bind(chrome.runtime.onMessageExternal, (data, sender, sendResponse) =>
+                this.emit('messageExternal', data, null, sendResponse)
+            );
+        } else {
+            console.debug('External messaging is not supported, not binding to external events');
+        }
+
+        // Successfully bound to messaging events
         return true;
     }
 

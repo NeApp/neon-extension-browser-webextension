@@ -12,6 +12,19 @@ export default class WebExtensionsPermissions extends Permissions {
         this._chromeListeners = [];
 
         // Bind to permission events
+        this.bind();
+    }
+
+    static get supported() {
+        return true;
+    }
+
+    bind() {
+        if(!this.constructor.supported) {
+            return false;
+        }
+
+        // Bind to permission events
         this._bind(chrome.permissions.onAdded, (permissions) =>
             this.emit('added', permissions)
         );
@@ -19,9 +32,8 @@ export default class WebExtensionsPermissions extends Permissions {
         this._bind(chrome.permissions.onRemoved, (permissions) =>
             this.emit('removed', permissions)
         );
-    }
 
-    static get supported() {
+        // Successfully bound to permission events
         return true;
     }
 

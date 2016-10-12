@@ -1,4 +1,4 @@
-/* global chrome */
+/* global browser */
 import Port from 'eon.extension.browser.base/messaging/port';
 
 import {isDefined} from 'eon.extension.framework/core/helpers';
@@ -10,11 +10,11 @@ export default class WebExtensionsPort extends Port {
 
         this._port = port;
 
-        this._chromeListeners = [];
+        this._listeners = [];
 
         // Bind to port events
         this._bind(this._port.onDisconnect, () =>
-            this.emit('disconnect', chrome.runtime.lastError, this)
+            this.emit('disconnect', browser.runtime.lastError, this)
         );
 
         this._bind(this._port.onMessage, (message) =>
@@ -59,8 +59,8 @@ export default class WebExtensionsPort extends Port {
     }
 
     dispose() {
-        // Unbind chrome listeners
-        this._chromeListeners.forEach((entry) => {
+        // Unbind listeners
+        this._listeners.forEach((entry) => {
             try {
                 entry.unbind();
             } catch(e) {
@@ -69,7 +69,7 @@ export default class WebExtensionsPort extends Port {
         });
 
         // Reset state
-        this._chromeListeners = [];
+        this._listeners = [];
     }
 
     // region Private methods
@@ -91,7 +91,7 @@ export default class WebExtensionsPort extends Port {
         }
 
         // Store reference (for future disposal)
-        this._chromeListeners.push({
+        this._listeners.push({
             event: event,
             callback: callback,
 

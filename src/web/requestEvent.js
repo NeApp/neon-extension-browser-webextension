@@ -1,4 +1,4 @@
-/* global chrome */
+/* global browser */
 import WebRequestEvent from 'eon.extension.browser.base/web/requestEvent';
 
 import {NotImplementedError} from 'eon.extension.framework/core/exceptions';
@@ -19,7 +19,7 @@ export default class WebExtensionsWebRequestEvent extends WebRequestEvent {
             throw new Error('Missing the required "options.urls" parameter');
         }
 
-        chrome.webRequest[this.name].addListener(callback, {
+        browser.webRequest[this.name].addListener(callback, {
             urls: options.urls
         });
     }

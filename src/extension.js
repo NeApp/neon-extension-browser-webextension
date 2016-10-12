@@ -1,4 +1,4 @@
-/* global chrome */
+/* global browser */
 import Extension from 'eon.extension.browser.base/extension';
 
 
@@ -8,10 +8,10 @@ export default class WebExtensionsExtension extends Extension {
     }
 
     get id() {
-        return chrome.runtime.id;
+        return browser.runtime.id;
     }
 
     getUrl(path) {
-        return chrome.runtime.getURL(path);
+        return browser.runtime.getURL(path);
     }
 }

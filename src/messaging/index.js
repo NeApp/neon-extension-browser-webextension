@@ -1,4 +1,4 @@
-/* global chrome */
+/* global browser */
 import Messaging from 'eon.extension.browser.base/messaging';
 
 import {isDefined} from 'eon.extension.framework/core/helpers';
@@ -12,7 +12,7 @@ export default class WebExtensionsMessaging extends Messaging {
     constructor() {
         super();
 
-        this._chromeListeners = [];
+        this._listeners = [];
 
         // Bind to messaging events
         this.bind();
@@ -37,21 +37,21 @@ export default class WebExtensionsMessaging extends Messaging {
         }
 
         // Bind to extension messaging events
-        this._bind(chrome.runtime.onConnect, (port) =>
+        this._bind(browser.runtime.onConnect, (port) =>
             this.emit('connect', this.createPortWrapper(port))
         );
 
-        this._bind(chrome.runtime.onMessage, (data, sender, sendResponse) =>
+        this._bind(browser.runtime.onMessage, (data, sender, sendResponse) =>
             this.emit('message', data, null, sendResponse)
         );
 
         // Bind to external messaging events (if enabled)
         if(this.constructor.supportsExternalMessaging) {
-            this._bind(chrome.runtime.onConnectExternal, (port) =>
+            this._bind(browser.runtime.onConnectExternal, (port) =>
                 this.emit('connectExternal', this.createPortWrapper(port))
             );
 
-            this._bind(chrome.runtime.onMessageExternal, (data, sender, sendResponse) =>
+            this._bind(browser.runtime.onMessageExternal, (data, sender, sendResponse) =>
                 this.emit('messageExternal', data, null, sendResponse)
             );
         } else {
@@ -67,8 +67,8 @@ export default class WebExtensionsMessaging extends Messaging {
     }
 
     dispose() {
-        // Unbind chrome listeners
-        this._chromeListeners.forEach((entry) => {
+        // Unbind listeners
+        this._listeners.forEach((entry) => {
             try {
                 entry.unbind();
             } catch(e) {
@@ -77,13 +77,13 @@ export default class WebExtensionsMessaging extends Messaging {
         });
 
         // Reset state
-        this._chromeListeners = [];
+        this._listeners = [];
     }
 
     // region Web
 
     connect(extensionId, options) {
-        let port = chrome.runtime.connect(extensionId, options);
+        let port = browser.runtime.connect(extensionId, options);
 
         if(!isDefined(port)) {
             return null;
@@ -94,7 +94,7 @@ export default class WebExtensionsMessaging extends Messaging {
 
     sendMessage(extensionId, message, options) {
         return this._sendMessage(
-            chrome.runtime.sendMessage,
+            browser.runtime.sendMessage,
             extensionId, message, options
         );
     }
@@ -104,7 +104,7 @@ export default class WebExtensionsMessaging extends Messaging {
     // region Native
 
     connectNative(application) {
-        let port = chrome.runtime.connectNative(application);
+        let port = browser.runtime.connectNative(application);
 
         if(!isDefined(port)) {
             return null;
@@ -115,7 +115,7 @@ export default class WebExtensionsMessaging extends Messaging {
 
     sendNativeMessage(application, message, options) {
         return this._sendMessage(
-            chrome.runtime.sendNativeMessage,
+            browser.runtime.sendNativeMessage,
             application, message, options
         );
     }
@@ -141,7 +141,7 @@ export default class WebExtensionsMessaging extends Messaging {
         }
 
         // Store reference (for future disposal)
-        this._chromeListeners.push({
+        this._listeners.push({
             event: event,
             callback: callback,
 
@@ -187,7 +187,7 @@ export default class WebExtensionsMessaging extends Messaging {
 
                 // Reject promise with runtime error
                 if(typeof response === 'undefined') {
-                    reject(new Error(chrome.runtime.lastError));
+                    reject(new Error(browser.runtime.lastError));
                     return;
                 }
 

@@ -1,10 +1,10 @@
 /* global browser */
-import Port from 'eon.extension.browser.base/messaging/port';
+import {Port} from 'eon.extension.browser.base/messaging/port';
 
 import {isDefined} from 'eon.extension.framework/core/helpers';
 
 
-export default class WebExtensionsPort extends Port {
+export class WebExtensionsPort extends Port {
     constructor(port) {
         super();
 
@@ -14,7 +14,7 @@ export default class WebExtensionsPort extends Port {
 
         // Bind to port events
         this._bind(this._port.onDisconnect, () =>
-            this.emit('disconnect', browser.runtime.lastError, this)
+            this.emit('disconnect', this.api.lastError, this)
         );
 
         this._bind(this._port.onMessage, (message) =>
@@ -24,6 +24,10 @@ export default class WebExtensionsPort extends Port {
 
     static get supported() {
         return true;
+    }
+
+    get api() {
+        return browser.runtime;
     }
 
     get name() {

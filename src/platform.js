@@ -1,4 +1,4 @@
-import Platform, {Platforms, PlatformTypes} from 'eon.extension.browser.base/platform';
+import {Platform, Platforms, PlatformTypes} from 'eon.extension.browser.base/platform';
 
 
 export {
@@ -6,7 +6,7 @@ export {
     PlatformTypes
 };
 
-export default class WebExtensionsPlatform extends Platform {
+export class WebExtensionsPlatform extends Platform {
     get type() {
         return PlatformTypes.WebExtensions;
     }

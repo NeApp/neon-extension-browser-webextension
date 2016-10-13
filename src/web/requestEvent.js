@@ -1,13 +1,17 @@
 /* global browser */
-import WebRequestEvent from 'eon.extension.browser.base/web/requestEvent';
+import {WebRequestEvent} from 'eon.extension.browser.base/web/requestEvent';
 
 import {NotImplementedError} from 'eon.extension.framework/core/exceptions';
 import {isDefined} from 'eon.extension.framework/core/helpers';
 
 
-export default class WebExtensionsWebRequestEvent extends WebRequestEvent {
+export class WebExtensionsWebRequestEvent extends WebRequestEvent {
     static get supported() {
         return true;
+    }
+
+    get api() {
+        return browser.webRequest;
     }
 
     addListener(callback, options) {
@@ -19,7 +23,7 @@ export default class WebExtensionsWebRequestEvent extends WebRequestEvent {
             throw new Error('Missing the required "options.urls" parameter');
         }
 
-        browser.webRequest[this.name].addListener(callback, {
+        this.api[this.name].addListener(callback, {
             urls: options.urls
         });
     }

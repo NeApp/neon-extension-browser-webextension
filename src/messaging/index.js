@@ -1,14 +1,14 @@
 /* global browser */
-import Messaging from 'eon.extension.browser.base/messaging';
+import {Messaging} from 'eon.extension.browser.base/messaging';
 
 import {isDefined} from 'eon.extension.framework/core/helpers';
 
 import merge from 'lodash-es/merge';
 
-import WebExtensionsPort from './port';
+import {WebExtensionsPort} from './port';
 
 
-export default class WebExtensionsMessaging extends Messaging {
+export class WebExtensionsMessaging extends Messaging {
     constructor() {
         super();
 
@@ -26,6 +26,10 @@ export default class WebExtensionsMessaging extends Messaging {
         return true;
     }
 
+    get api() {
+        return browser.runtime;
+    }
+
     get supportsExternalMessaging() {
         return true;
     }
@@ -37,21 +41,21 @@ export default class WebExtensionsMessaging extends Messaging {
         }
 
         // Bind to extension messaging events
-        this._bind(browser.runtime.onConnect, (port) =>
+        this._bind(this.api.onConnect, (port) =>
             this.emit('connect', this.createPortWrapper(port))
         );
 
-        this._bind(browser.runtime.onMessage, (data, sender, sendResponse) =>
+        this._bind(this.api.onMessage, (data, sender, sendResponse) =>
             this.emit('message', data, null, sendResponse)
         );
 
         // Bind to external messaging events (if enabled)
         if(this.constructor.supportsExternalMessaging) {
-            this._bind(browser.runtime.onConnectExternal, (port) =>
+            this._bind(this.api.onConnectExternal, (port) =>
                 this.emit('connectExternal', this.createPortWrapper(port))
             );
 
-            this._bind(browser.runtime.onMessageExternal, (data, sender, sendResponse) =>
+            this._bind(this.api.onMessageExternal, (data, sender, sendResponse) =>
                 this.emit('messageExternal', data, null, sendResponse)
             );
         } else {
@@ -83,7 +87,7 @@ export default class WebExtensionsMessaging extends Messaging {
     // region Web
 
     connect(extensionId, options) {
-        let port = browser.runtime.connect(extensionId, options);
+        let port = this.api.connect(extensionId, options);
 
         if(!isDefined(port)) {
             return null;
@@ -94,7 +98,7 @@ export default class WebExtensionsMessaging extends Messaging {
 
     sendMessage(extensionId, message, options) {
         return this._sendMessage(
-            browser.runtime.sendMessage,
+            this.api.sendMessage,
             extensionId, message, options
         );
     }
@@ -104,7 +108,7 @@ export default class WebExtensionsMessaging extends Messaging {
     // region Native
 
     connectNative(application) {
-        let port = browser.runtime.connectNative(application);
+        let port = this.api.connectNative(application);
 
         if(!isDefined(port)) {
             return null;
@@ -115,7 +119,7 @@ export default class WebExtensionsMessaging extends Messaging {
 
     sendNativeMessage(application, message, options) {
         return this._sendMessage(
-            browser.runtime.sendNativeMessage,
+            this.api.sendNativeMessage,
             application, message, options
         );
     }
@@ -187,7 +191,7 @@ export default class WebExtensionsMessaging extends Messaging {
 
                 // Reject promise with runtime error
                 if(typeof response === 'undefined') {
-                    reject(new Error(browser.runtime.lastError));
+                    reject(new Error(this.api.lastError));
                     return;
                 }
 

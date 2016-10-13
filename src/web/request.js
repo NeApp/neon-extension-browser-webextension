@@ -1,9 +1,9 @@
-import WebRequest from 'eon.extension.browser.base/web/request';
+import {WebRequest} from 'eon.extension.browser.base/web/request';
 
-import WebExtensionsWebRequestEvent from './requestEvent';
+import {WebExtensionsWebRequestEvent} from './requestEvent';
 
 
-export default class WebExtensionsWebRequest extends WebRequest {
+export class WebExtensionsWebRequest extends WebRequest {
     static get supported() {
         return true;
     }

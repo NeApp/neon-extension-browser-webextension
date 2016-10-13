@@ -1,17 +1,21 @@
 /* global browser */
-import Extension from 'eon.extension.browser.base/extension';
+import {Extension} from 'eon.extension.browser.base/extension';
 
 
-export default class WebExtensionsExtension extends Extension {
+export class WebExtensionsExtension extends Extension {
     static get supported() {
         return true;
     }
 
+    get api() {
+        return browser.runtime;
+    }
+
     get id() {
-        return browser.runtime.id;
+        return this.api.id;
     }
 
     getUrl(path) {
-        return browser.runtime.getURL(path);
+        return this.api.getURL(path);
     }
 }

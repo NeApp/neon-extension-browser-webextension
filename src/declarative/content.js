@@ -1,4 +1,5 @@
-import DeclarativeContent, {
+import {
+    DeclarativeContent,
     PageStateMatcher,
     RequestContentScript,
     SetIcon,
@@ -13,5 +14,5 @@ export {
     ShowPageAction
 };
 
-export default class WebExtensionsDeclarativeContent extends DeclarativeContent {
+export class WebExtensionsDeclarativeContent extends DeclarativeContent {
 }

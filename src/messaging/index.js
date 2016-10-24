@@ -1,7 +1,7 @@
 /* global browser */
 import {Messaging} from 'eon.extension.browser.base/messaging';
 
-import {isDefined} from 'eon.extension.framework/core/helpers';
+import {isDefined, isFunction} from 'eon.extension.framework/core/helpers';
 
 import merge from 'lodash-es/merge';
 
@@ -28,6 +28,10 @@ export class WebExtensionsMessaging extends Messaging {
 
     get api() {
         return browser.runtime;
+    }
+
+    get available() {
+        return isFunction(this.api.connect);
     }
 
     get supportsExternalMessaging() {
@@ -87,6 +91,10 @@ export class WebExtensionsMessaging extends Messaging {
     // region Web
 
     connect(extensionId, options) {
+        if(!isFunction(this.api.connect)) {
+            throw new Error('Extension "connect" method is not available');
+        }
+
         let port = this.api.connect(extensionId, options);
 
         if(!isDefined(port)) {
@@ -108,6 +116,10 @@ export class WebExtensionsMessaging extends Messaging {
     // region Native
 
     connectNative(application) {
+        if(!isFunction(this.api.connectNative)) {
+            throw new Error('Extension "connectNative" method is not available');
+        }
+
         let port = this.api.connectNative(application);
 
         if(!isDefined(port)) {

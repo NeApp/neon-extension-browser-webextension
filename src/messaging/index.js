@@ -90,12 +90,12 @@ export class WebExtensionsMessaging extends Messaging {
 
     // region Web
 
-    connect(extensionId, options) {
+    connect(...args) {
         if(!isFunction(this.api.connect)) {
             throw new Error('Extension "connect" method is not available');
         }
 
-        let port = this.api.connect(extensionId, options);
+        let port = this.api.connect(...args);
 
         if(!isDefined(port)) {
             return null;
@@ -104,23 +104,20 @@ export class WebExtensionsMessaging extends Messaging {
         return this.createPortWrapper(port);
     }
 
-    sendMessage(extensionId, message, options) {
-        return this._sendMessage(
-            this.api.sendMessage,
-            extensionId, message, options
-        );
+    sendMessage(...args) {
+        return this.api.sendMessage(...args);
     }
 
     // endregion
 
     // region Native
 
-    connectNative(application) {
+    connectNative(...args) {
         if(!isFunction(this.api.connectNative)) {
             throw new Error('Extension "connectNative" method is not available');
         }
 
-        let port = this.api.connectNative(application);
+        let port = this.api.connectNative(...args);
 
         if(!isDefined(port)) {
             return null;
@@ -129,11 +126,8 @@ export class WebExtensionsMessaging extends Messaging {
         return this.createPortWrapper(port);
     }
 
-    sendNativeMessage(application, message, options) {
-        return this._sendMessage(
-            this.api.sendNativeMessage,
-            application, message, options
-        );
+    sendNativeMessage(...args) {
+        return this.api.sendNativeMessage(...args);
     }
 
     // endregion
@@ -163,60 +157,6 @@ export class WebExtensionsMessaging extends Messaging {
 
             unbind: () => {
                 event.removeListener(callback);
-            }
-        });
-    }
-
-    _sendMessage(method, target, message, options) {
-        options = isDefined(options) ? options : {};
-
-        // Set default options
-        options = merge({
-            awaitResponse: true,
-            timeout: 5
-        }, options);
-
-        // Return promise
-        return new Promise((resolve, reject) => {
-            // Build method parameters
-            let parameters = {
-                includeTlsChannelId: options.includeTlsChannelId
-            };
-
-            // Send message and resolve instantly
-            if(!options.awaitResponse) {
-                method(target, message, parameters);
-
-                // Resolve promise
-                resolve();
-                return;
-            }
-
-            // Send message and await response
-            let cancelTimeout = null;
-
-            method(target, message, parameters, (response) => {
-                // Cancel timeout callback
-                if(cancelTimeout !== null) {
-                    cancelTimeout();
-                }
-
-                // Reject promise with runtime error
-                if(typeof response === 'undefined') {
-                    reject(new Error(this.api.lastError));
-                    return;
-                }
-
-                // Resolve promise
-                resolve(response);
-            });
-
-            // Timeout promise in `options.timeout` seconds (if timeout has been defined)
-            if(isDefined(options.timeout)) {
-                cancelTimeout = setTimeout(() => {
-                    // Reject promise with timeout error
-                    reject(new Error('No response returned within ' + options.timeout + ' second(s)'));
-                }, options.timeout);
             }
         });
     }

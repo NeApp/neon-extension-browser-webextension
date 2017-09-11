@@ -13,9 +13,13 @@ export class WebExtensionsPort extends Port {
         this._listeners = [];
 
         // Bind to port events
-        this._bind(this._port.onDisconnect, () =>
-            this.emit('disconnect', this.api.lastError, this)
-        );
+        this._bind(this._port.onDisconnect, () => {
+            // Emit event
+            this.emit('disconnect', this.api.lastError, this);
+
+            // Unbind event listeners
+            this.dispose();
+        });
 
         this._bind(this._port.onMessage, (message) =>
             this.emit('message', message, this)

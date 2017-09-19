@@ -1,7 +1,5 @@
-/* global browser */
-import {Permissions} from 'eon.extension.browser.base/permissions';
-
 import Deferred from 'eon.extension.framework/core/deferred';
+import {Permissions} from 'eon.extension.browser.base/permissions';
 import {isDefined} from 'eon.extension.framework/core/helpers';
 
 

@@ -1,7 +1,5 @@
-/* global browser */
-import {WebRequestEvent} from 'eon.extension.browser.base/web/requestEvent';
-
 import {NotImplementedError} from 'eon.extension.framework/core/exceptions';
+import {WebRequestEvent} from 'eon.extension.browser.base/web/requestEvent';
 import {isDefined} from 'eon.extension.framework/core/helpers';
 
 

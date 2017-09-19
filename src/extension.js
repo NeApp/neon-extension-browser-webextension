@@ -1,6 +1,4 @@
-/* global browser */
 import {Extension} from 'eon.extension.browser.base/extension';
-
 import {isDefined} from 'eon.extension.framework/core/helpers';
 
 

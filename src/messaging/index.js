@@ -1,4 +1,3 @@
-/* global browser */
 import {Messaging} from 'eon.extension.browser.base/messaging';
 import {isDefined, isFunction} from 'eon.extension.framework/core/helpers';
 

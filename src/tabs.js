@@ -1,6 +1,4 @@
-/* global browser */
 import {Tabs} from 'eon.extension.browser.base/tabs';
-
 import {isDefined} from 'eon.extension.framework/core/helpers';
 
 

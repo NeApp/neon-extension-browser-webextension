@@ -1,6 +1,4 @@
-/* global browser */
 import {Port} from 'eon.extension.browser.base/messaging/port';
-
 import {isDefined} from 'eon.extension.framework/core/helpers';
 
 

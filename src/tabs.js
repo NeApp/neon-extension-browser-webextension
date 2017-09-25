@@ -1,5 +1,5 @@
-import {Tabs} from 'eon.extension.browser.base/tabs';
-import {isDefined} from 'eon.extension.framework/core/helpers';
+import {Tabs} from 'neon-extension-browser-base/tabs';
+import {isDefined} from 'neon-extension-framework/core/helpers';
 
 
 export class WebExtensionsTabs extends Tabs {

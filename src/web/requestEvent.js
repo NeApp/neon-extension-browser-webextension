@@ -1,6 +1,6 @@
-import {NotImplementedError} from 'eon.extension.framework/core/exceptions';
-import {WebRequestEvent} from 'eon.extension.browser.base/web/requestEvent';
-import {isDefined} from 'eon.extension.framework/core/helpers';
+import {NotImplementedError} from 'neon-extension-framework/core/exceptions';
+import {WebRequestEvent} from 'neon-extension-browser-base/web/requestEvent';
+import {isDefined} from 'neon-extension-framework/core/helpers';
 
 
 export class WebExtensionsWebRequestEvent extends WebRequestEvent {

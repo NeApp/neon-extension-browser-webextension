@@ -1,5 +1,5 @@
-import {Messaging} from 'eon.extension.browser.base/messaging';
-import {isDefined, isFunction} from 'eon.extension.framework/core/helpers';
+import {Messaging} from 'neon-extension-browser-base/messaging';
+import {isDefined, isFunction} from 'neon-extension-framework/core/helpers';
 
 import {WebExtensionsPort} from './port';
 

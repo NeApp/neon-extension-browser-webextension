@@ -1,4 +1,4 @@
-import {Storage} from 'eon.extension.browser.base/storage';
+import {Storage} from 'neon-extension-browser-base/storage';
 
 import {WebExtensionsStorageContext} from './context';
 

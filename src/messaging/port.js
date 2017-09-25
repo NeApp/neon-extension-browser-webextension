@@ -1,5 +1,5 @@
-import {Port} from 'eon.extension.browser.base/messaging/port';
-import {isDefined} from 'eon.extension.framework/core/helpers';
+import {Port} from 'neon-extension-browser-base/messaging/port';
+import {isDefined} from 'neon-extension-framework/core/helpers';
 
 
 export class WebExtensionsPort extends Port {

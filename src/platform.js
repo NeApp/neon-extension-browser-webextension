@@ -1,4 +1,4 @@
-import {Platform, Platforms, PlatformTypes} from 'eon.extension.browser.base/platform';
+import {Platform, Platforms, PlatformTypes} from 'neon-extension-browser-base/platform';
 
 
 export {

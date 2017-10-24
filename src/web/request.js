@@ -4,8 +4,8 @@ import {WebExtensionsWebRequestEvent} from './requestEvent';
 
 
 export class WebExtensionsWebRequest extends WebRequest {
-    static get supported() {
-        return true;
+    static get key() {
+        return 'webRequest';
     }
 
     createEvent(name) {

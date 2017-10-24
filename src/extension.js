@@ -12,11 +12,7 @@ export class WebExtensionsExtension extends Extension {
         this.bind();
     }
 
-    static get supported() {
-        return true;
-    }
-
-    get api() {
+    static get api() {
         return browser.runtime;
     }
 
@@ -25,7 +21,7 @@ export class WebExtensionsExtension extends Extension {
     }
 
     bind() {
-        if(!this.constructor.supported) {
+        if(!this.supported) {
             return false;
         }
 

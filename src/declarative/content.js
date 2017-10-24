@@ -2,4 +2,7 @@ import {DeclarativeContent} from 'neon-extension-browser-base/declarative/conten
 
 
 export class WebExtensionsDeclarativeContent extends DeclarativeContent {
+    static get key() {
+        return 'declarativeContent';
+    }
 }

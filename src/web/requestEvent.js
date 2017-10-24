@@ -4,11 +4,7 @@ import {isDefined} from 'neon-extension-framework/core/helpers';
 
 
 export class WebExtensionsWebRequestEvent extends WebRequestEvent {
-    static get supported() {
-        return true;
-    }
-
-    get api() {
+    static get api() {
         return browser.webRequest;
     }
 

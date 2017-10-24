@@ -12,16 +12,16 @@ export class WebExtensionsTabs extends Tabs {
         this.bind();
     }
 
-    static get supported() {
-        return true;
-    }
-
-    get api() {
+    static get api() {
         return browser.tabs;
     }
 
+    static get key() {
+        return 'tabs';
+    }
+
     bind() {
-        if(!this.constructor.supported) {
+        if(!this.supported) {
             return false;
         }
 

@@ -28,11 +28,7 @@ export class WebExtensionsPort extends Port {
         );
     }
 
-    static get supported() {
-        return true;
-    }
-
-    get api() {
+    static get api() {
         return browser.runtime;
     }
 

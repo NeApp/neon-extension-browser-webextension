@@ -14,16 +14,16 @@ export class WebExtensionsMessaging extends Messaging {
         this.bind();
     }
 
-    static get supported() {
-        return true;
+    static get api() {
+        return browser.runtime;
+    }
+
+    static get key() {
+        return 'messaging';
     }
 
     static get supportsExternalMessaging() {
         return true;
-    }
-
-    get api() {
-        return browser.runtime;
     }
 
     get available() {
@@ -31,11 +31,11 @@ export class WebExtensionsMessaging extends Messaging {
     }
 
     get supportsExternalMessaging() {
-        return true;
+        return this.constructor.supportsExternalMessaging;
     }
 
     bind() {
-        if(!this.constructor.supported) {
+        if(!this.supported) {
             console.warn('Messaging is not supported, not binding to any events');
             return false;
         }

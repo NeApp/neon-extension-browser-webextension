@@ -13,16 +13,16 @@ export class WebExtensionsPermissions extends Permissions {
         this.bind();
     }
 
-    static get supported() {
-        return isDefined(browser.permissions);
-    }
-
-    get api() {
+    static get api() {
         return browser.permissions;
     }
 
+    static get key() {
+        return 'permissions';
+    }
+
     bind() {
-        if(!this.constructor.supported) {
+        if(!this.supported) {
             return false;
         }
 

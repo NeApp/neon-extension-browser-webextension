@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+- '7'
+script:
+- npm run test
+deploy:
+  provider: npm
+  email: neapp-ci@me.dgardiner.net
+  api_key:
+    secure: eeqCMEHA2JHJW2yeHN7EPImgRJQp2xHV1aY1GtKHQO/GmwpoldEAGa4BnQw2HTpacRj/miCkbWhwg5OJCZCvWPOb0f3MuRcAQFDr2tkMAg+g+oZGFPHQbvThnMQVAEelblZJVNPR/nuysIg0ijbyQvlnQ8u3vxseEElYijmONIRPPE36nsgQPCQkRclpWloTAZg9dMoWQByBSGCsnnElQpptIRW1HakDxLpyMj6HFtSH94W3b3KcRWtsdaYPLMcANbImYoBjsUnyFBP0JdHAhasow5v3cSl7txz259zMn4SelyhFD1Y8xvarSY0eUg4AEfNDqehlXtM1smjx2Z1RNZzsEV8i2SvK0d0GQp4HNEng/q2hAYy7cQVg+4vYaXDXHgqydYhUrLhidJd04pu6eqA8a4TluE8epW2H+PP+W9UzvKuQyIDbUmCqGaOxs9P/IC0YuWUcqHZPOeFZ45FuRwWrno9w1nKUAnO63AUzDuLMoS3ZAv4Ol1UGHRae5OOxEqeaaihv2CriLo58Tpkl04WbFqv81XLZcCSJaK0MHFH36VnOAMXgG4tKfszSMPI72qvxP3LJ5REFeWigLW4kXXM5mRyK86rDvTrzj5x3T9dKa9LX5pd14IlEuDI8TFsPKfL3IxGZUMmRzAb0Je3fGdQTA880P8dAWSS7xfOz7PA=
+  on:
+    repo: NeApp/neon-extension-browser-webextension
+    tags: true

@@ -1,6 +1,6 @@
 {
   "name": "neon-extension-browser-webextension",
-  "version": "1.5.1-beta.2",
+  "version": "1.5.1-beta.4",
   "description": "Neon Extension: WebExtension Interface Base",
   "keywords": ["neon", "neon-extension", "webextension"],
   "homepage": "https://github.com/NeApp/neon-extension",
@@ -31,7 +31,7 @@
     "eslint-plugin-react": "^6.3.0"
   },
   "peerDependencies": {
-    "neon-extension-browser-base": "^1.5.1-beta.1",
-    "neon-extension-framework": "^1.5.1-beta.1"
+    "neon-extension-browser-base": "^1.5.1-beta.4",
+    "neon-extension-framework": "^1.5.1-beta.4"
   }
 }

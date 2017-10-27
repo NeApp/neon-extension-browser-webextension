@@ -6,8 +6,8 @@ export {
     PlatformTypes
 };
 
-export class WebExtensionsPlatform extends Platform {
+export class WebExtensionPlatform extends Platform {
     get type() {
-        return PlatformTypes.WebExtensions;
+        return PlatformTypes.WebExtension;
     }
 }

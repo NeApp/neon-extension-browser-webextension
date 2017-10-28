@@ -1,6 +1,6 @@
 {
   "name": "neon-extension-browser-webextension",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Neon Extension: WebExtension Interface Base",
   "keywords": ["neon", "neon-extension", "webextension"],
   "homepage": "https://github.com/NeApp/neon-extension",

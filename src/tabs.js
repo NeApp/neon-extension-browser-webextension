@@ -35,6 +35,10 @@ export class WebExtensionsTabs extends Tabs {
         return true;
     }
 
+    create(properties) {
+        return this.api.create(properties);
+    }
+
     update(tabId, properties) {
         return this.api.update(tabId, properties);
     }

@@ -1,5 +1,6 @@
+import IsNil from 'lodash-es/isNil';
+
 import {Tabs} from 'neon-extension-browser-base/tabs';
-import {isDefined} from 'neon-extension-framework/core/helpers';
 
 
 export class WebExtensionsTabs extends Tabs {
@@ -63,7 +64,7 @@ export class WebExtensionsTabs extends Tabs {
         callback = callback.bind(this);
 
         // Ensure event exists
-        if(!isDefined(event)) {
+        if(IsNil(event)) {
             return;
         }
 

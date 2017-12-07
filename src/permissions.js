@@ -1,6 +1,7 @@
+import IsNil from 'lodash-es/isNil';
+
 import Deferred from 'neon-extension-framework/core/deferred';
 import {Permissions} from 'neon-extension-browser-base/permissions';
-import {isDefined} from 'neon-extension-framework/core/helpers';
 
 
 export class WebExtensionsPermissions extends Permissions {
@@ -54,7 +55,7 @@ export class WebExtensionsPermissions extends Permissions {
 
     contains(options) {
         // Validate parameters
-        if(!isDefined(options)) {
+        if(IsNil(options)) {
             return Promise.reject(new Error(
                 'Invalid value provided for the "options" parameter, expected an object matching {permissions, origins}'
             ));
@@ -65,8 +66,8 @@ export class WebExtensionsPermissions extends Permissions {
 
         // Remove permissions and/or origins
         this.api.contains({
-            permissions: isDefined(options.permissions) ? options.permissions : [],
-            origins: isDefined(options.origins) ? options.origins : []
+            permissions: !IsNil(options.permissions) ? options.permissions : [],
+            origins: !IsNil(options.origins) ? options.origins : []
         }, deferred.resolve);
 
         // Return promise
@@ -75,7 +76,7 @@ export class WebExtensionsPermissions extends Permissions {
 
     request(options) {
         // Validate parameters
-        if(!isDefined(options)) {
+        if(IsNil(options)) {
             return Promise.reject(new Error(
                 'Invalid value provided for the "options" parameter, expected an object matching {permissions, origins}'
             ));
@@ -86,8 +87,8 @@ export class WebExtensionsPermissions extends Permissions {
 
         // Request permissions and/or origins
         this.api.request({
-            permissions: isDefined(options.permissions) ? options.permissions : [],
-            origins: isDefined(options.origins) ? options.origins : []
+            permissions: !IsNil(options.permissions) ? options.permissions : [],
+            origins: !IsNil(options.origins) ? options.origins : []
         }, (granted) => {
             if(!granted) {
                 deferred.reject(new Error(
@@ -105,7 +106,7 @@ export class WebExtensionsPermissions extends Permissions {
 
     remove(options) {
         // Validate parameters
-        if(!isDefined(options)) {
+        if(IsNil(options)) {
             return Promise.reject(new Error(
                 'Invalid value provided for the "options" parameter, expected an object matching {permissions, origins}'
             ));
@@ -116,8 +117,8 @@ export class WebExtensionsPermissions extends Permissions {
 
         // Remove permissions and/or origins
         this.api.remove({
-            permissions: isDefined(options.permissions) ? options.permissions : [],
-            origins: isDefined(options.origins) ? options.origins : []
+            permissions: !IsNil(options.permissions) ? options.permissions : [],
+            origins: !IsNil(options.origins) ? options.origins : []
         }, (removed) => {
             if(!removed) {
                 deferred.reject(new Error(
@@ -155,7 +156,7 @@ export class WebExtensionsPermissions extends Permissions {
         callback = callback.bind(this);
 
         // Ensure event exists
-        if(!isDefined(event)) {
+        if(IsNil(event)) {
             return;
         }
 

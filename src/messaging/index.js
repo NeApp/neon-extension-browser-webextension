@@ -1,5 +1,7 @@
+import IsFunction from 'lodash-es/isFunction';
+import IsNil from 'lodash-es/isNil';
+
 import {Messaging} from 'neon-extension-browser-base/messaging';
-import {isDefined, isFunction} from 'neon-extension-framework/core/helpers';
 
 import {WebExtensionsPort} from './port';
 
@@ -27,7 +29,7 @@ export class WebExtensionsMessaging extends Messaging {
     }
 
     get available() {
-        return isFunction(this.api.connect);
+        return IsFunction(this.api.connect);
     }
 
     get supportsExternalMessaging() {
@@ -87,13 +89,13 @@ export class WebExtensionsMessaging extends Messaging {
     // region Web
 
     connect(...args) {
-        if(!isFunction(this.api.connect)) {
+        if(!IsFunction(this.api.connect)) {
             throw new Error('Extension "connect" method is not available');
         }
 
         let port = this.api.connect(...args);
 
-        if(!isDefined(port)) {
+        if(IsNil(port)) {
             return null;
         }
 
@@ -109,13 +111,13 @@ export class WebExtensionsMessaging extends Messaging {
     // region Native
 
     connectNative(...args) {
-        if(!isFunction(this.api.connectNative)) {
+        if(!IsFunction(this.api.connectNative)) {
             throw new Error('Extension "connectNative" method is not available');
         }
 
         let port = this.api.connectNative(...args);
 
-        if(!isDefined(port)) {
+        if(IsNil(port)) {
             return null;
         }
 
@@ -134,7 +136,7 @@ export class WebExtensionsMessaging extends Messaging {
         callback = callback.bind(this);
 
         // Ensure event exists
-        if(!isDefined(event)) {
+        if(IsNil(event)) {
             return;
         }
 

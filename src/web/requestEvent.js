@@ -1,6 +1,7 @@
+import IsNil from 'lodash-es/isNil';
+
 import {NotImplementedError} from 'neon-extension-framework/core/exceptions';
 import {WebRequestEvent} from 'neon-extension-browser-base/web/requestEvent';
-import {isDefined} from 'neon-extension-framework/core/helpers';
 
 
 export class WebExtensionsWebRequestEvent extends WebRequestEvent {
@@ -9,11 +10,11 @@ export class WebExtensionsWebRequestEvent extends WebRequestEvent {
     }
 
     addListener(callback, options) {
-        if(!isDefined(options)) {
+        if(IsNil(options)) {
             throw new Error('Invalid value provided for the "options" parameter');
         }
 
-        if(!isDefined(options.urls)) {
+        if(IsNil(options.urls)) {
             throw new Error('Missing the required "options.urls" parameter');
         }
 

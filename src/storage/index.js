@@ -1,5 +1,6 @@
+import IsNil from 'lodash-es/isNil';
+
 import {Storage} from 'neon-extension-browser-base/storage';
-import {isDefined} from 'neon-extension-framework/core/helpers';
 import {isSupported} from 'neon-extension-browser-base/base';
 
 
@@ -8,7 +9,7 @@ import {WebExtensionsStorageContext} from './context';
 
 export class WebExtensionsStorage extends Storage {
     static get api() {
-        if(!isDefined(browser.storage)) {
+        if(IsNil(browser.storage)) {
             return null;
         }
 
@@ -20,7 +21,7 @@ export class WebExtensionsStorage extends Storage {
     }
 
     static get supportsStorageApi() {
-        return isSupported(WebExtensionsStorage.key) && isDefined(this.api);
+        return isSupported(WebExtensionsStorage.key) && !IsNil(this.api);
     }
 
     context(name) {
@@ -44,7 +45,7 @@ export class WebExtensionsStorage extends Storage {
         return this.api.get(key).then((items) => {
             let value = items[key];
 
-            if(!isDefined(value)) {
+            if(IsNil(value)) {
                 return super.get(key);
             }
 

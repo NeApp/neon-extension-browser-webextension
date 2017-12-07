@@ -1,5 +1,6 @@
+import IsNil from 'lodash-es/isNil';
+
 import {Port} from 'neon-extension-browser-base/messaging/port';
-import {isDefined} from 'neon-extension-framework/core/helpers';
 
 
 export class WebExtensionsPort extends Port {
@@ -37,7 +38,7 @@ export class WebExtensionsPort extends Port {
     }
 
     get name() {
-        if(!isDefined(this._port)) {
+        if(IsNil(this._port)) {
             return null;
         }
 
@@ -45,7 +46,7 @@ export class WebExtensionsPort extends Port {
     }
 
     get sender() {
-        if(!isDefined(this._port)) {
+        if(IsNil(this._port)) {
             return null;
         }
 
@@ -53,7 +54,7 @@ export class WebExtensionsPort extends Port {
     }
 
     disconnect() {
-        if(!isDefined(this._port)) {
+        if(IsNil(this._port)) {
             throw new Error('No port available');
         }
 
@@ -61,7 +62,7 @@ export class WebExtensionsPort extends Port {
     }
 
     postMessage(message) {
-        if(!isDefined(this._port)) {
+        if(IsNil(this._port)) {
             throw new Error('No port available');
         }
 
@@ -88,7 +89,7 @@ export class WebExtensionsPort extends Port {
         callback = callback.bind(this);
 
         // Ensure event exists
-        if(!isDefined(event)) {
+        if(IsNil(event)) {
             return;
         }
 

@@ -35,6 +35,14 @@ export class WebExtensionsExtension extends Extension {
         return true;
     }
 
+    getCallbackUrl(path) {
+        if(IsNil(path)) {
+            path = '';
+        }
+
+        return this.getUrl(path);
+    }
+
     getUrl(path) {
         return this.api.getURL(path);
     }

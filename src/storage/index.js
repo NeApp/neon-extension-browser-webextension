@@ -29,19 +29,20 @@ export class WebExtensionsStorage extends Storage {
     }
 
     remove(key) {
-        if(!WebExtensionsStorage.supportsStorageApi) {
+        if(!this.constructor.supportsStorageApi) {
             return super.remove(key);
         }
 
+        // Remove value from storage
         return this.api.remove(key);
     }
 
     get(key) {
-        if(!WebExtensionsStorage.supportsStorageApi) {
+        if(!this.constructor.supportsStorageApi) {
             return super.get(key);
         }
 
-        // Try retrieve value from extension storage
+        // Try retrieve value from storage
         return this.api.get(key).then((items) => {
             let value = items[key];
 
@@ -54,7 +55,7 @@ export class WebExtensionsStorage extends Storage {
     }
 
     put(key, value) {
-        if(!WebExtensionsStorage.supportsStorageApi) {
+        if(!this.constructor.supportsStorageApi) {
             return super.put(key, value);
         }
 
@@ -63,7 +64,7 @@ export class WebExtensionsStorage extends Storage {
 
         item[key] = value;
 
-        // Put value in extension storage
+        // Put value in storage
         return this.api.set(item);
     }
 }

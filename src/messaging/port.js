@@ -10,15 +10,20 @@ export class WebExtensionsPort extends Port {
         this._port = port;
 
         this._connected = true;
+        this._error = null;
+
         this._listeners = [];
 
         // Bind to port events
         this._bind(this._port.onDisconnect, () => {
+            let error = this.api.lastError;
+
             // Update state
             this._connected = false;
+            this._error = error;
 
             // Emit event
-            this.emit('disconnect', this.api.lastError, this);
+            this.emit('disconnect', error, this);
 
             // Unbind event listeners
             this.dispose();
@@ -35,6 +40,10 @@ export class WebExtensionsPort extends Port {
 
     get connected() {
         return this._connected;
+    }
+
+    get error() {
+        return this._error;
     }
 
     get name() {
